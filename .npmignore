@@ -1,0 +1,58 @@
+# Source files
+src/
+*.ts
+!dist/**/*.d.ts
+
+# Config files
+tsconfig.json
+jest.config.js
+.eslintrc*
+.prettierrc*
+
+# Test files
+test/
+tests/
+test-*.js
+*.test.ts
+*.spec.ts
+__tests__/
+coverage/
+
+# Development files
+docker-compose.yml
+Dockerfile
+*.sh
+freetakserver-setup/
+
+# Documentation
+docs/
+*.md
+!README.md
+!LICENSE
+
+# Examples and config
+examples/
+config/
+config.example.json
+
+# Build tools
+.github/
+.vscode/
+.idea/
+
+# Logs and temp files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.*

@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { ServerTransport } from '@modelcontextprotocol/sdk/server/types.js';
+// import { ServerTransport } from '@modelcontextprotocol/sdk/server/types.js';
 import { JSONRPCRequest, JSONRPCResponse } from '@modelcontextprotocol/sdk/types.js';
 import jwt from 'jsonwebtoken';
 import { Config } from '../config/index';
@@ -10,7 +10,7 @@ const logger = pino({
   level: process.env.LOG_LEVEL || 'info'
 });
 
-export class HttpServerTransport implements ServerTransport {
+export class HttpServerTransport {
   private server: Server;
   private app: express.Application;
   private config: Config;
@@ -153,7 +153,7 @@ export class HttpServerTransport implements ServerTransport {
       };
 
       // Process the request through the server
-      this.server['handleRequest'](request, mockConnection);
+      (this.server as any).handleRequest(request, mockConnection);
     });
   }
 

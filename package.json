@@ -9,14 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skyfi/tak-server-mcp.git"
+    "url": "git+https://github.com/optisense/tak-server-mcp.git"
   },
-  "homepage": "https://github.com/skyfi/tak-server-mcp#readme",
+  "homepage": "https://github.com/optisense/tak-server-mcp#readme",
   "bugs": {
-    "url": "https://github.com/skyfi/tak-server-mcp/issues"
+    "url": "https://github.com/optisense/tak-server-mcp/issues"
   },
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build",
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "test": "jest",

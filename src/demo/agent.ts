@@ -185,7 +185,7 @@ Provide:
       ]
     });
 
-    return response.content[0].text;
+    return (response.content[0] as any).text;
   }
 
   async performGeospatialAnalysis(query: string): Promise<any> {
@@ -200,7 +200,7 @@ Provide:
       tool_choice: { type: 'auto' },
       messages: [
         {
-          role: 'system',
+          role: 'user' as const,
           content: `You are a geospatial intelligence analyst with access to real-time TAK Server data. 
           Current tactical situation:
           - Friendly forces: ${this.situation.friendlyForces.length}
@@ -242,7 +242,7 @@ Provide:
       max_tokens: 4096,
       messages: [
         {
-          role: 'system',
+          role: 'user' as const,
           content: 'You are a military intelligence analyst. Generate a comprehensive situation report (SITREP) based on the current tactical data.'
         },
         {
@@ -275,7 +275,7 @@ Include:
       ]
     });
 
-    return response.content[0].text;
+    return (response.content[0] as any).text;
   }
 
   async runInteractiveDemo(): Promise<void> {
@@ -565,7 +565,7 @@ Include:
 }
 
 // Demo runner
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (require.main === module) {
   const agent = new GeospatialResearchAgent({
     anthropicApiKey: process.env.ANTHROPIC_API_KEY || '',
     mcpServerUrl: process.env.MCP_SERVER_URL || 'http://localhost:3000',

@@ -12,10 +12,10 @@ import { calculateDistanceTool } from './geospatial/calculate-distance';
 import { findNearestTool } from './geospatial/find-nearest';
 import { createGeofenceTool } from './geospatial/create-geofence';
 import { analyzeMovementTool } from './geospatial/analyze-movement';
-import { getMissionsTool } from './missions/get-missions';
+// import { getMissionsTool } from './missions/get-missions';
 import { getAlertsTool } from './alerts/get-alerts';
 import { sendEmergencyTool } from './alerts/send-emergency';
-import { manageDataPackagesTool } from './data-packages/manage-data-packages';
+// import { manageDataPackagesTool } from './data-packages/manage-data-packages';
 
 export interface ToolContext {
   takClient: TAKServerClient;
@@ -44,10 +44,10 @@ class ToolRegistry {
     this.registerTool(findNearestTool);
     this.registerTool(createGeofenceTool);
     this.registerTool(analyzeMovementTool);
-    this.registerTool(getMissionsTool);
+    // this.registerTool(getMissionsTool);
     this.registerTool(getAlertsTool);
     this.registerTool(sendEmergencyTool);
-    this.registerTool(manageDataPackagesTool);
+    // this.registerTool(manageDataPackagesTool);
   }
 
   registerTool(tool: TAKTool): void {

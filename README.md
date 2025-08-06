@@ -5,6 +5,7 @@ A Model Context Protocol (MCP) server for integrating TAK Server with AI systems
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MCP Version](https://img.shields.io/badge/MCP-2024--11--05-blue.svg)](https://modelcontextprotocol.io)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
+[![npm version](https://img.shields.io/npm/v/@skyfi/tak-server-mcp.svg)](https://www.npmjs.com/package/@skyfi/tak-server-mcp)
 
 ## 🚀 Features
 
@@ -52,20 +53,24 @@ A Model Context Protocol (MCP) server for integrating TAK Server with AI systems
 
 ## 🛠️ Installation
 
-### Using NPM
+### Option 1: Install from NPM (Recommended)
 ```bash
+# Install globally
+npm install -g @skyfi/tak-server-mcp
+
+# Or install locally in your project
 npm install @skyfi/tak-server-mcp
 ```
 
-### From Source
+### Option 2: From Source
 ```bash
-git clone https://github.com/skyfi/tak-server-mcp.git
+git clone https://github.com/optisense/tak-server-mcp.git
 cd tak-server-mcp
 npm install
 npm run build
 ```
 
-### Using Docker
+### Option 3: Using Docker
 ```bash
 docker pull skyfi/tak-server-mcp:latest
 ```
@@ -107,9 +112,9 @@ Create a `config.json`:
 
 ## 🚀 Quick Start
 
-### 1. With Claude Desktop
+### 1. With Claude Desktop (Recommended)
 
-Add to your Claude Desktop config:
+Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
 ```json
 {
   "mcpServers": {
@@ -125,15 +130,7 @@ Add to your Claude Desktop config:
 }
 ```
 
-### 2. With Docker
-```bash
-docker run -it --rm \
-  -e TAK_SERVER_URL=https://your-tak-server.com \
-  -e TAK_SERVER_API_TOKEN=your-token \
-  skyfi/tak-server-mcp:latest
-```
-
-### 3. Command Line
+### 2. As a CLI Tool
 ```bash
 # Install globally
 npm install -g @skyfi/tak-server-mcp
@@ -143,8 +140,74 @@ TAK_SERVER_URL=https://your-tak-server.com \
 TAK_SERVER_API_TOKEN=your-token \
 tak-server-mcp
 
+# Or with a config file
+tak-server-mcp --config ./config.json
+```
+
+### 3. Programmatic Usage
+```javascript
+import { TAKServerClient } from '@skyfi/tak-server-mcp';
+
+const client = new TAKServerClient({
+  url: 'https://your-tak-server.com',
+  apiToken: 'your-token'
+});
+
+// Get CoT events
+const events = await client.getCotEvents();
+console.log(events);
+
+// Send an emergency
+await client.sendEmergency({
+  type: 'medical',
+  location: { lat: 37.7749, lon: -122.4194 },
+  message: 'Medical assistance required'
+});
+```
+
+### 4. With Docker
+```bash
+docker run -it --rm \
+  -e TAK_SERVER_URL=https://your-tak-server.com \
+  -e TAK_SERVER_API_TOKEN=your-token \
+  skyfi/tak-server-mcp:latest
+
 # Or with config file
 tak-server-mcp --config ./config.json
+```
+
+## 💡 Common Use Cases
+
+### AI-Powered Situational Awareness
+Use with Claude or other AI assistants to:
+- Analyze real-time tactical situations
+- Generate intelligence reports from TAK data
+- Monitor geofenced areas for security breaches
+- Track and predict entity movements
+- Coordinate emergency responses
+
+### Integration Examples
+```javascript
+// Example: Monitor a perimeter and alert on breaches
+const monitorPerimeter = async () => {
+  const client = new TAKServerClient({ /* config */ });
+  
+  // Create geofence
+  await client.createGeofence({
+    name: "Secure Zone Alpha",
+    shape: { type: "circle", center: [37.7749, -122.4194], radius: 1000 },
+    alertLevel: "critical"
+  });
+  
+  // Subscribe to breach events
+  await client.subscribeEvents({
+    eventTypes: ['geofence-breach'],
+    callback: (event) => {
+      console.log('BREACH DETECTED:', event);
+      // Trigger automated response
+    }
+  });
+};
 ```
 
 ## 📚 Usage Examples
@@ -330,10 +393,40 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Anthropic for the MCP specification
 - The open-source geospatial community
 
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Connection Failed**
+```bash
+# Check TAK Server is accessible
+curl -k https://your-tak-server.com/Marti/api/version
+
+# Verify credentials
+TAK_SERVER_URL=... TAK_SERVER_API_TOKEN=... npm run test:connection
+```
+
+**Permission Denied**
+```bash
+# Ensure proper certificate permissions
+chmod 600 /path/to/client.key
+chmod 644 /path/to/client.pem
+```
+
+**Tool Not Found**
+```bash
+# List available tools
+tak-server-mcp --list-tools
+
+# Check if tool is enabled in config
+grep "enabledTools" config.json
+```
+
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/skyfi/tak-server-mcp/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/skyfi/tak-server-mcp/discussions)
+- **Issues**: [GitHub Issues](https://github.com/optisense/tak-server-mcp/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/optisense/tak-server-mcp/discussions)
+- **Documentation**: [Wiki](https://github.com/optisense/tak-server-mcp/wiki)
 - **Email**: support@skyfi.com
 
 ## 🚦 Status
